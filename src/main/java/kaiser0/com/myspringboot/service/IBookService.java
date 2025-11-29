@@ -1,12 +1,9 @@
 package kaiser0.com.myspringboot.service;
 
-import kaiser0.com.myspringboot.entity.Book;
-
+import kaiser0.com.myspringboot.dto.BookDTO;
 import java.util.List;
 
 public interface IBookService {
-
-    Book saveBook(Book book);
-
-    List<Book> getAllBooks();
+    BookDTO saveBook(BookDTO bookDTO);
+    List<BookDTO> getAllBooks();
 }
