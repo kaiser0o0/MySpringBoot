@@ -1,7 +1,7 @@
 package kaiser0.com.myspringboot.entity;
 
-
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore; // Döngüsel referansı önlemek için
 
 @Entity
 @Table(name = "books")
@@ -17,7 +17,10 @@ public class Book {
     private String author;
     private int pageCount;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
     //Getter and  Setter
 
 
