@@ -1,29 +1,25 @@
 package kaiser0.com.myspringboot.entity;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore; // Döngüsel referansı önlemek için
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "books")
-
 public class Book {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
-    private String author;
     private int pageCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
-    //Getter and  Setter
 
-
+    // Getter and Setter
     public Long getId() {
         return id;
     }
@@ -40,14 +36,6 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public int getPageCount() {
         return pageCount;
     }
@@ -56,5 +44,11 @@ public class Book {
         this.pageCount = pageCount;
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

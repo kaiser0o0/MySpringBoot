@@ -3,39 +3,49 @@ package kaiser0.com.myspringboot.service;
 import kaiser0.com.myspringboot.dto.request.BookRequest;
 import kaiser0.com.myspringboot.dto.response.BookResponse;
 import kaiser0.com.myspringboot.entity.Book;
+import kaiser0.com.myspringboot.entity.User;
 import kaiser0.com.myspringboot.mapper.BookMapper;
 import kaiser0.com.myspringboot.repository.IBookRepository;
+import kaiser0.com.myspringboot.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional; // Önemli: Transaction yönetimi
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor // Constructor injection için Lombok
+@RequiredArgsConstructor
 public class BookService implements IBookService {
 
     private final IBookRepository bookRepository;
+    private final IUserRepository userRepository;
     private final BookMapper bookMapper;
 
     @Override
+    @Transactional
     public BookResponse saveBook(BookRequest bookRequest) {
-        // 1. DTO'yu Entity'ye çevir
+
+
+        User user = userRepository.findById(bookRequest.getUserId())
+                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı! ID: " + bookRequest.getUserId()));
+
+
         Book book = bookMapper.toEntity(bookRequest);
 
-        // 2. Veritabanına kaydet
+
+        book.setUser(user);
+
+
         Book savedBook = bookRepository.save(book);
 
-        // 3. Entity'yi Response DTO'ya çevirip dön
+
         return bookMapper.toResponse(savedBook);
     }
 
     @Override
     public List<BookResponse> getAllBooks() {
-        List<Book> books = bookRepository.findAll();
-
-
-        return books.stream()
+        return bookRepository.findAll().stream()
                 .map(bookMapper::toResponse)
                 .collect(Collectors.toList());
     }
