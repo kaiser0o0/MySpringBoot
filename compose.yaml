@@ -1,9 +1,18 @@
+version: '3.8' # Genellikle son versiyonu kullanmak iyidir
+
 services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - 'POSTGRES_DB=mydb'
-      - 'POSTGRES_PASSWORD=password'
-      - 'POSTGRES_USER=kaiser'
+      - POSTGRES_DB=mydb
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=kaiser
     ports:
-      - '5432'
+      # HOST_PORT:CONTAINER_PORT
+      - '5432:5432'
+    volumes:
+      # Verilerin kalıcı olarak saklanacağı Volume
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
