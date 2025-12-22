@@ -9,7 +9,7 @@ import kaiser0.com.myspringboot.repository.IBookRepository;
 import kaiser0.com.myspringboot.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // Önemli: Transaction yönetimi
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface IBookService {
     BookResponse saveBook(BookRequest bookRequest);
+
     List<BookResponse> getAllBooks();
 }
