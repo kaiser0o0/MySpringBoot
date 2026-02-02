@@ -1,31 +1,28 @@
 package kaiser0.com.myspringboot.controller;
 
-import jakarta.validation.Valid;
+import kaiser0.com.myspringboot.dto.Result;
 import kaiser0.com.myspringboot.dto.request.LoginRequest;
+import kaiser0.com.myspringboot.dto.request.RegisterRequest;
 import kaiser0.com.myspringboot.dto.response.AuthResponse;
-import kaiser0.com.myspringboot.entity.User;
 import kaiser0.com.myspringboot.service.IAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final IAuthService authService;
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok(authService.login(loginRequest));
+    @PostMapping("/register")
+    public ResponseEntity<Result<AuthResponse>> register(@RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authService.register(request));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody User user) {
-        return ResponseEntity.ok(authService.register(user));
+    @PostMapping("/login")
+    public ResponseEntity<Result<AuthResponse>> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 }
